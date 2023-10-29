@@ -20,5 +20,10 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        $this->call([
+            tns2023_10_24_00_13_59_user_role_seeder::class,
+            tns2023_10_24_00_14_16_projects_permissions_seeder::class,
+            \ThailandAddressSeeder::class,
+        ]);
     }
 }
