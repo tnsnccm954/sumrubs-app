@@ -1,5 +1,5 @@
 import "./bootstrap";
-import "../css/app.css";
+import "../sass/app.scss";
 import "@fortawesome/fontawesome-free/js/fontawesome";
 import "@fortawesome/fontawesome-free/js/solid";
 import "vue-select/dist/vue-select.css";
