@@ -11,7 +11,7 @@ class MakeSeeder extends Command
      *
      * @var string
      */
-    protected $signature = 'make:sr-seeder {filename}';
+    protected $signature = 'make:sr-seed {filename}';
 
     /**
      * The console command description.
