@@ -20,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix' => 'map', 'name' => 'api.map.'], function () {
-    Route::get('/searchplace', [GoogleMapApiController::class, 'searchPlaceNearby'])->name('searchNearby');
+Route::group(['prefix' => 'map'], function () {
+    Route::get('/searchplaces', [GoogleMapApiController::class, 'searchPlaceNearby'])->name('place.nearby');
+    Route::get('/searchplaces/{place}', [GoogleMapApiController::class, 'getPlaceDetail'])->name('place.detail');
+    Route::get('/searchplaces/photo/{photoReference}', [GoogleMapApiController::class, 'getPlacePhoto'])->name('place.photo');
 });

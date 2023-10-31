@@ -16,9 +16,10 @@ class tns2023_10_24_00_13_59_user_role_seeder extends Seeder
     public function run()
     {
         $roles = [
-            'super_admin' => LookupRole::create([
-                'name' => 'ผู้จัดการระบบ',
+            'super_admin' => LookupRole::firstorCreate([
                 'system_name' => 'super_dev',
+            ], [
+                'name' => 'ผู้จัดการระบบ',
                 'access_key' => config("roleaccess.superdev", ""),
                 'modifilable' => false,
             ]),

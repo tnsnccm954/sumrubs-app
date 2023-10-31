@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\GoogleMapApiController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -17,9 +18,17 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+    // return Inertia::render('Welcome', [
+    //     'canLogin' => Route::has('login'),
+    //     'canRegister' => Route::has('register'),
+    // ]);
+    return Inertia::render('Index', [
+        'bindingPattern' => '/*\[v-binding\]*/',
+        'nearbySearchUrl' => route('place.nearby'),
+        'getPlaceDetailUrl' => route('place.detail', ['place' => '[v-binding]']),
+        'getPlacePhotoUrl' => route('place.photo', ['photoReference' => '[v-binding]']),
+
+
     ]);
 });
 

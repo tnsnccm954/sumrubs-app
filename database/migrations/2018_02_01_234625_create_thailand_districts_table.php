@@ -14,7 +14,7 @@ class CreateThailandDistrictsTable extends Migration
     public function up()
     {
         Schema::create('thailand_districts', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+            // $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->integer('code');
@@ -39,6 +39,9 @@ class CreateThailandDistrictsTable extends Migration
      */
     public function down()
     {
+        Schema::table('thailand_districts', function (Blueprint $table) {
+            $table->dropForeign('fk_thailand_districts_thailand_provinces');
+        });
         Schema::dropIfExists('thailand_districts');
     }
 }

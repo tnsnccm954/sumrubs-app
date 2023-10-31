@@ -7,7 +7,7 @@ use App\Models\LookupRole;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class tns2023_10_24_00_14_16_projects_permissions_seeder extends Seeder
+class tns2023_10_30_002500_reviews_permissions_seeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,20 +19,20 @@ class tns2023_10_24_00_14_16_projects_permissions_seeder extends Seeder
         $permissions = collect([
             'view' => LookupPermission::firstOrCreate([
                 'action' => 'view',
-                'object' => 'places',
-            ], ['display_name' => 'ดู place',]),
+                'object' => 'reviews',
+            ], ['display_name' => 'ดู review',]),
             'create' => LookupPermission::firstOrCreate([
                 'action' => 'create',
-                'object' => 'places',
-            ], ['display_name' => 'สร้าง place']),
+                'object' => 'reviews',
+            ], ['display_name' => 'สร้าง review']),
             'update' => LookupPermission::firstOrCreate([
                 'action' => 'update',
-                'object' => 'places',
-            ], ['display_name' => 'แก้ไข place',]),
+                'object' => 'reviews',
+            ], ['display_name' => 'แก้ไข review',]),
             'delete' => LookupPermission::firstOrCreate([
                 'action' => 'delete',
-                'object' => 'places',
-            ], ['display_name' => 'ลบ place',]),
+                'object' => 'reviews',
+            ], ['display_name' => 'ลบ review',]),
         ]);
 
         $superDev = LookupRole::where('system_name', 'super_dev')->first();

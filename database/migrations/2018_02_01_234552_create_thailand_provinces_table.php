@@ -14,7 +14,7 @@ class CreateThailandProvincesTable extends Migration
     public function up()
     {
         Schema::create('thailand_provinces', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
+            // $table->engine = 'InnoDB';
 
             $table->increments('id');
             $table->integer('code');
