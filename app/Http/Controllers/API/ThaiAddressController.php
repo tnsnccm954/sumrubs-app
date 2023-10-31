@@ -14,15 +14,15 @@ class ThaiAddressController extends Controller
     {
         switch ($choice) {
             case "provinces":
-                $result = ThailandProvince::where("name_in_thai", "like", "%" . $request->input('name') . "%")->take(20);
+                $result = ThailandProvince::where("name_in_thai", "like", "%" . $request->input('name') . "%")->take(6)->get();
                 $message = "Provinces are retrieved";
                 break;
             case "districts":
-                $result = ThailandDistrict::where("name_in_thai", "like", "%" . $request->input('name') . "%")->take(20);
+                $result = ThailandDistrict::where("name_in_thai", "like", "%" . $request->input('name') . "%")->take(6)->get();
                 $message = "Districts are retrieved";
                 break;
             case "subdistricts":
-                $result = ThailandSubDistrict::where("name_in_thai", "like", "%" . $request->input('name') . "%")->take(20);
+                $result = ThailandSubDistrict::where("name_in_thai", "like", "%" . $request->input('name') . "%")->take(6)->get();
                 $message = "Subdistricts are retrieved";
                 break;
             default:

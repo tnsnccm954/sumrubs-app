@@ -22,7 +22,7 @@ export default {
         const searchResults = ref([]);
         const pageTokens = reactive({});
         const isLoading = ref(false);
-        const Options = reactive({});
+        const options = reactive({});
         const selected = reactive({});
         const markup = ref(null);
         const MarkersCoor = ref([]);
@@ -73,6 +73,30 @@ export default {
             window.scrollTo({ top: 0, behavior: "smooth" });
         };
 
+        const onSearch = (search, loading, choice) => {
+            if (search.length > 1) {
+                loading(true);
+                searchRepositories(loading, search, choice);
+            }
+        };
+
+        const searchRepositories = _.debounce((loading, search, choice) => {
+            fetch(
+                `/api/selector/thaiaddress/${choice}?name=${encodeURIComponent(
+                    search
+                )}`
+            ).then((res) => {
+                res.json().then((json) => {
+                    options[choice] = json.data.map((option) => ({
+                        label: option.name_in_thai,
+                        value: option.id,
+                    }));
+                    console.log(options[choice]);
+                    loading(false);
+                });
+            });
+        }, 350);
+
         return {
             query,
             shouldShowFilters,
@@ -81,12 +105,13 @@ export default {
             searchResults,
             pageTokens,
             isLoading,
-            Options,
+            options,
             MarkersCoor,
             setShowFilters,
             searchNearby,
             setMarkup,
             markup,
+            onSearch,
         };
     },
 };
@@ -149,43 +174,100 @@ export default {
                                 </div>
                             </div> -->
                         <div class="row g-3 align-items-center">
-                            <div class="col-auto align-self-center">
+                            <div class="col-3 align-self-center">
                                 <label class="col-form-label">จังหวัด: </label>
                             </div>
                             <div class="col">
                                 <v-select
                                     v-model="filters.provinceId"
+                                    @search="
+                                        (search, loading) =>
+                                            onSearch(
+                                                search,
+                                                loading,
+                                                'provinces'
+                                            )
+                                    "
+                                    :options="options.provinces"
+                                    :reduce="
+                                        (province) => {
+                                            return province.value;
+                                        }
+                                    "
                                 ></v-select>
                             </div>
-                            <div class="col-auto align-self-center">
+                        </div>
+                        <div class="row g-3 align-items-center">
+                            <div class="col-3 align-self-center">
                                 <label class="col-form-label">อำเภอ: </label>
                             </div>
                             <div class="col">
                                 <v-select
                                     v-model="filters.districtId"
+                                    @search="
+                                        (search, loading) =>
+                                            onSearch(
+                                                search,
+                                                loading,
+                                                'districts'
+                                            )
+                                    "
+                                    :options="options.districts"
+                                    :reduce="
+                                        (district) => {
+                                            return district.value;
+                                        }
+                                    "
                                 ></v-select>
                             </div>
                         </div>
                         <div class="row g-3 align-items-center">
-                            <div class="col-auto align-self-center">
-                                <label class="col-form-label"
+                            <div class="col-3 align-self-center">
+                                <label class="col-form-label text-right"
                                     >แขวง/ตำบล:
                                 </label>
                             </div>
                             <div class="col">
                                 <v-select
                                     v-model="filters.subDistrictId"
+                                    @search="
+                                        (search, loading) =>
+                                            onSearch(
+                                                search,
+                                                loading,
+                                                'subdistricts'
+                                            )
+                                    "
+                                    :options="options.subdistricts"
+                                    :reduce="
+                                        (subdistrict) => {
+                                            return subdistrict.value;
+                                        }
+                                    "
                                 ></v-select>
                             </div>
                         </div>
                         <div class="row g-3 align-items-center">
-                            <div class="col-auto align-self-center">
-                                <label class="col-form-label"
+                            <div class="col-3 align-self-center">
+                                <label class="col-form-label text-right"
                                     >ในระยะทาง :
                                 </label>
                             </div>
                             <div class="col">
-                                <v-select v-model="filters.radius"></v-select>
+                                <v-select
+                                    v-model="filters.radius"
+                                    :options="[
+                                        { label: '100 เมตร', value: 100 },
+                                        { label: '300 เมตร', value: 300 },
+                                        { label: '500 เมตร', value: 500 },
+                                        { label: '1 กิโลเมตร', value: 1000 },
+                                        { label: '3 กิโลเมตร', value: 3000 },
+                                        { label: '5 กิโลเมตร', value: 5000 },
+                                        { label: '10 กิโลเมตร', value: 10000 },
+                                        { label: '50 กิโลเมตร', value: 50000 },
+                                    ]"
+                                    :reduce="(radius) => radius.value"
+                                ></v-select>
                             </div>
                         </div>
                         <div class="row g-3 align-items-center">

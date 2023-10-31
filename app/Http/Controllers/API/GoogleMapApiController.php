@@ -78,7 +78,7 @@ class GoogleMapApiController extends Controller
             "radius" => "nullable|integer|in:$validateRadius",
             "nextPage" => 'nullable|string',
             "lang" => 'nullable|string|in:en,th',
-            "isOpen" => 'nullable|boolean',
+            "isOpen" => 'nullable|string|in:true,false',
         ]);
         $paramsBuild = [];
 

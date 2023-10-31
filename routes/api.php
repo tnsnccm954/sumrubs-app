@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\GoogleMapApiController;
+use App\Http\Controllers\API\ThaiAddressController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+Route::get('/selector/thaiaddress/{choice}', [ThaiAddressController::class, 'index']);
 
 Route::group(['prefix' => 'map'], function () {
     Route::get('/searchplaces', [GoogleMapApiController::class, 'searchPlaceNearby'])->name('place.nearby');
